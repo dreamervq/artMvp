@@ -1,0 +1,5 @@
+include ':login-library'
+include ':art'
+include ':magicindicator'
+include ':app'
+rootProject.name = "MyDemoK"

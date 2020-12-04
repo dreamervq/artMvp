@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/spacing_four"
+    android:paddingBottom="@dimen/spacing_four">
+
+    <!--<ImageView-->
+    <!--android:id="@+id/tab_icon"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:scaleType="centerInside" />-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <ImageView
+            android:id="@+id/tab_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerInside"
+            tools:src="@drawable/img_default_avatar" />
+
+        <TextView
+            android:id="@+id/tv_msg_num"
+            android:layout_width="wrap_content"
+            android:layout_height="14dp"
+            android:layout_alignTop="@id/tab_icon"
+            android:layout_alignRight="@id/tab_icon"
+            android:layout_marginTop="-3dp"
+            android:layout_marginRight="-5dp"
+            android:background="@drawable/bg_red_msg_num"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:minWidth="14dp"
+            android:textColor="@color/white_normal"
+            android:textSize="@dimen/txt_small"
+            android:visibility="gone"
+            tools:text="8" />
+
+        <View
+            android:id="@+id/tv_msg_dot"
+            android:layout_width="@dimen/spacing_small"
+            android:layout_height="@dimen/spacing_small"
+            android:layout_alignTop="@id/tab_icon"
+            android:layout_alignRight="@id/tab_icon"
+            android:layout_marginRight="@dimen/spacing_one"
+            android:background="@drawable/bg_red_dot"
+            android:visibility="gone" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_msg_num"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="16dp"-->
+        <!--android:layout_alignRight="@id/tab_icon"-->
+        <!--android:layout_alignTop="@id/tab_icon"-->
+        <!--android:layout_marginTop="-3dp"-->
+        <!--android:layout_marginRight="-6dp"-->
+        <!--android:background="@drawable/bg_red_msg_num"-->
+        <!--android:gravity="center"-->
+        <!--android:minWidth="16dp"-->
+        <!--android:paddingLeft="3dp"-->
+        <!--android:paddingRight="3dp"-->
+        <!--android:maxLines="1"-->
+        <!--android:ellipsize="end"-->
+        <!--android:textColor="@color/white_normal"-->
+        <!--android:textSize="@dimen/txt_small"-->
+        <!--android:visibility="gone"-->
+        <!--tools:text="8" />-->
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tab_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black_normal"
+        android:textSize="@dimen/txt_tips" />
+</LinearLayout>

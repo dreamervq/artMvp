@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_default">
+
+    <TextView
+        android:id="@+id/tv_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:text="等待中"
+        android:textColor="@color/black_normal"
+        android:textSize="@dimen/txt_tips" />
+
+    <com.example.mylibrary.utils.download.RoundProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="@dimen/spacing_float_btn"
+        android:layout_height="@dimen/spacing_float_btn"
+        android:layout_centerHorizontal="true"
+        app:progressMax="100"
+        app:progressTextColor="@color/colorAccent"
+        app:progressTextSize="@dimen/txt_normal_content"
+        app:roundColor="@color/black_hint"
+        app:roundProgressColor="@color/black_normal"
+        app:roundWidth="@dimen/spacing_four"
+        app:textIsDisplayable="true" />
+</RelativeLayout>
