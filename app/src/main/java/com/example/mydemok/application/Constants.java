@@ -2,13 +2,25 @@ package com.example.mydemok.application;
 
 import android.os.Environment;
 
+import com.example.mydemok.mvp.model.AppAgreement;
+
 import java.io.File;
 
 public class Constants {
     public static final int KEY_SUCCESS = 1001;
     public static final int KEY_FAILED = 1002;
-
-
+    public static final String PREF_FIRST = "xinmeng_sharedpreference_first";
+    public static final String HAS_SET_NOTIFICATION = "has_set_notification";
+    public static final String PREF_UPDATE = "xinmeng_sharedpreference_appupdate";
+    public static AppAgreement APP_AGREEMENT = null;
+    public static final int ARG_1 = 1;
+    public static final int ARG_2 = 2;
+    public static final int ARG_3 = 3;
+    public static final int ARG_4 = 4;
+    public static final int ARG_5 = 5;
+    public static final int ARG_6 = 6;
+    public static final int ARG_7 = 7;
+    public static final int ARG_MAIN = 11;
 
     private static final int SERVER_ENVIRONMENT_DEV = 1;
     private static final int SERVER_ENVIRONMENT_ZDG_TEST = 2;
@@ -29,4 +41,5 @@ public class Constants {
      */
     public static final String ART_KEY = "huashengfm";
     public static final String ART_SECRET = "b165ZL39eqK1361c6ec0pmE63b22e2B";
+
 }

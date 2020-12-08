@@ -1,6 +1,5 @@
 package com.example.mylibrary.mvp.uis.fragment
 
-import android.os.Bundle
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
@@ -12,7 +11,7 @@ import me.jessyan.art.ui.adapters.TabPagerAdapter
 import me.jessyan.art.ui.view.PagerSlidingTabStrip
 import java.util.*
 
-abstract class BaseTabFragment<T : ITabPager?, P : IPresenter> : BasesFragment<P>(),OnPageChangeListener,ITabContent {
+abstract class BaseTabFragment<T : ITabPager?, P : IPresenter> : BaseNewFragment<P>(),OnPageChangeListener,ITabContent {
     protected var mTabLayout: PagerSlidingTabStrip? = null
     protected var mPager: ViewPager? = null
     protected var mItems: List<T>? = ArrayList()

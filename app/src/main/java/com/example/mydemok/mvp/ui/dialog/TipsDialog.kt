@@ -2,13 +2,14 @@ package com.example.mydemok.mvp.ui.dialog
 
 import android.app.Dialog
 import android.content.Context
+import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import com.example.mydemok.R
 import kotlinx.android.synthetic.main.dialog_tip.*
 
 class TipsDialog<T>(context: Context?) :
-    Dialog(context, R.style.normal_dialog_small) {
+    Dialog(context, R.style.dialog_match_parent) {
     protected var entity: T? = null
     protected var listener: OnDialogClickListener<T>? = null
 
@@ -46,6 +47,8 @@ class TipsDialog<T>(context: Context?) :
         show(tip, params)
         tv_ensure?.setText(ensure)
         tv_cancel?.setText(cancel)
+        tv_ensure?.visibility = if (TextUtils.isEmpty(ensure)) View.GONE else View.VISIBLE
+        tv_cancel?.visibility = if (TextUtils.isEmpty(ensure)) View.GONE else View.VISIBLE
     }
 
     fun showEnsure(tip: CharSequence?) {

@@ -11,12 +11,13 @@ import me.jessyan.art.mvp.IPresenter
 import me.jessyan.art.ui.adapters.TabPagerAdapter
 import me.jessyan.art.ui.view.PagerSlidingTabStrip
 import java.util.*
+import kotlin.collections.ArrayList
 
 abstract class BaseTabActivity<T : ITabPager?, P : IPresenter> : BaseSwipeBackActivity<P>(),
     OnPageChangeListener, ITabContent {
     protected var mTabLayout: PagerSlidingTabStrip? = null
     protected var mPager: ViewPager? = null
-    protected var mItems: List<T>? = ArrayList()
+    protected var mItems: ArrayList<T> = ArrayList()
     protected var mAdapter: PagerAdapter? = null
     protected var selectedIndex = -1
 
@@ -41,14 +42,14 @@ abstract class BaseTabActivity<T : ITabPager?, P : IPresenter> : BaseSwipeBackAc
         protected get() = 0f
 
     protected fun initPager() {
-        if (mItems == null || mItems!!.size == 0) {
+        if (mItems.isEmpty()) {
             return
         }
         mAdapter = pagerAdapter
-        mPager!!.adapter = mAdapter
-        mTabLayout!!.tabAddWay = itemAddWay
-        mTabLayout!!.setViewPager(mPager)
-        mTabLayout!!.setOnPageChangeListener(this)
+        mPager?.adapter = mAdapter
+        mTabLayout?.tabAddWay = itemAddWay
+        mTabLayout?.setViewPager(mPager)
+        mTabLayout?.setOnPageChangeListener(this)
     }
 
     protected val pagerAdapter: PagerAdapter
@@ -88,4 +89,8 @@ abstract class BaseTabActivity<T : ITabPager?, P : IPresenter> : BaseSwipeBackAc
      * 获取完数据后回调设置pager
      */
     protected abstract fun getData(): Unit
+
+    override fun useFragment(): Boolean {
+        return true
+    }
 }

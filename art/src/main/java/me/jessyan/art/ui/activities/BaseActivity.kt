@@ -1,5 +1,7 @@
 package com.example.mylibrary.mvp.uis.activities
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -104,6 +106,8 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity<P>,
         return false
     }
 
+    override fun initData(savedInstanceState: Bundle?) {
+    }
 
     fun transparentStatusBar() {
         if (Build.VERSION.SDK_INT >= 21) {
@@ -147,6 +151,7 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity<P>,
     interface CheckPermListener {
         //权限通过后的回调方法
         fun agreeAllPermission()
+        fun agreePermissionFail()
     }
 
     protected open fun checkPermission(permission: String?): Boolean {
@@ -164,8 +169,8 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity<P>,
         return permissionList
     }
 
-    open fun checkPermission(
-        @Nullable listener: CheckPermListener,
+    open fun getPermissions(
+        listener: CheckPermListener?,
         resString: String?,
         vararg mPerms: String?
     ) {
@@ -176,11 +181,13 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity<P>,
 
             override fun onRequestPermissionFailure(permissions: List<String>) {
                 if (permissions.size < 3) {
-                    //   PushAgent.getInstance(BaseNewActivity.this).onAppStart();
                 }
+                listener?.agreePermissionFail()
             }
 
-            override fun onRequestPermissionFailureWithAskNeverAgain(permissions: List<String>) {}
+            override fun onRequestPermissionFailureWithAskNeverAgain(permissions: List<String>) {
+                listener?.agreePermissionFail()
+            }
         }, rxPermissions, rxErrorHandler, *mPerms)
     }
 
@@ -238,6 +245,7 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity<P>,
         }
         return mPresenter!!
     }
+
 
     /**
      * 把Observable的生命周期与Activity绑定
@@ -300,22 +308,19 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity<P>,
         return false
     }
 
-    @JvmOverloads
-    open fun startActivity(clazz: Class<*>?, bundle: Bundle? = null) {
-        val intent = Intent(this, clazz)
-        if (bundle != null) {
-            intent.putExtras(bundle)
-        }
+    inline fun <reified T : Activity> Context.startActivity(bundle: Bundle? = null) {
+        val intent = Intent(this, T::class.java)
+        bundle?.let { intent.putExtras(it) }
         startActivity(intent)
         overridePendingTransition(R.anim.ui_right_in, R.anim.fade_out)
     }
 
-    @JvmOverloads
-    open fun startActivityForResult(clazz: Class<*>?, requestCode: Int, bundle: Bundle? = null) {
-        val intent = Intent(this, clazz)
-        if (bundle != null) {
-            intent.putExtras(bundle)
-        }
+    inline fun <reified T : Activity> Context.startActivityForResult(
+        requestCode: Int,
+        bundle: Bundle? = null
+    ) {
+        val intent = Intent(this, T::class.java)
+        bundle?.let { intent.putExtras(it) }
         startActivityForResult(intent, requestCode)
         overridePendingTransition(R.anim.ui_right_in, R.anim.fade_out)
     }

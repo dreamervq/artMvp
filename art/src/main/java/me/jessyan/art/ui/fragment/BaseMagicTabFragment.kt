@@ -2,7 +2,6 @@ package com.example.mylibrary.mvp.uis.fragment
 
 import android.content.Context
 import android.graphics.Typeface
-import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
 import android.view.animation.OvershootInterpolator
@@ -27,7 +26,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorT
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView
 import java.util.*
 
-abstract class BaseMagicTabFragment<T : ITabPager?, P : IPresenter> : BasesFragment<P>(),
+abstract class BaseMagicTabFragment<T : ITabPager?, P : IPresenter> : BaseNewFragment<P>(),
     ITabContent {
     protected var magicIndicator: MagicIndicator? = null
     protected var mPager: ViewPager? = null
@@ -137,4 +136,5 @@ abstract class BaseMagicTabFragment<T : ITabPager?, P : IPresenter> : BasesFragm
      * 获取完数据后回调设置pager
      */
     protected abstract fun getData(): Unit
+
 }

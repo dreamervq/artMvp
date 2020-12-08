@@ -58,9 +58,6 @@ abstract class BaseHeaderActivity<P : IPresenter> : BaseActivity<P>(), View.OnCl
         }
     }
 
-    override fun initData(savedInstanceState: Bundle?) {
-    }
-
     protected abstract fun getTitleText(): String?
     protected fun onTitleClicked(view: View?) {}
     protected abstract fun initViews(savedInstanceState: Bundle?)

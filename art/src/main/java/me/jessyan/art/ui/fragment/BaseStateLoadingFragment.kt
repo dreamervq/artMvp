@@ -5,7 +5,7 @@ import me.jessyan.art.mvp.IPresenter
 import me.jessyan.art.ui.view.StateLayout
 import me.jessyan.art.ui.view.emptyprovider.FadeViewAnimProvider
 
-abstract class BaseStateLoadingFragment<P : IPresenter> : BasesFragment<P>() {
+abstract class BaseStateLoadingFragment<P : IPresenter> : BaseNewFragment<P>() {
     protected var stateLayout: StateLayout? = null
     override fun initData() {
         super.initData()

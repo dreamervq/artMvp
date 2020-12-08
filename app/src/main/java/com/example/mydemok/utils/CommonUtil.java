@@ -385,7 +385,7 @@ public class CommonUtil {
 
     /**
      * MD5加密
-     * */
+     */
     public static String md5(String string) {
         byte[] hash;
         try {
@@ -404,4 +404,36 @@ public class CommonUtil {
         return hex.toString();
     }
 
+    public static int compareVersion(String version1, String version2) {  //解析版本号a.b.c为a b c三个数字对比大小
+        if (TextUtils.isEmpty(version1) || TextUtils.isEmpty(version2)) { //某个版本号异常，认为是同一个版本，不弹更新对话框
+            return 0;
+        }
+        String[] versionStr1 = version1.split("\\.");
+        String[] versionStr2 = version2.split("\\.");
+        if (versionStr1.length == 0 || versionStr2.length == 0) { //某个版本号异常，认为是同一个版本，不弹更新对话框
+            return 0;
+        }
+        for (int i = 0; i < versionStr1.length; i++) {
+            if (i >= versionStr2.length) { //类似于1.2.2 和1.2的情况
+                return 1;
+            }
+            String versionItem1 = versionStr1[i];
+            String versionItem2 = versionStr2[i];
+            try {
+                int versionInt1 = Integer.valueOf(versionItem1);
+                int versionInt2 = Integer.valueOf(versionItem2);
+                if (versionInt1 > versionInt2) {
+                    return 1;
+                } else if (versionInt1 < versionInt2) {
+                    return -1;
+                }
+            } catch (Exception e) { //某个版本号异常，认为是同一个版本，不弹更新对话框
+                return 0;
+            }
+        }
+        if (versionStr1.length == versionStr2.length) {
+            return 0;
+        }
+        return -1;  //类似于1.2和1.2.2的情况
+    }
 }

@@ -42,7 +42,28 @@ android {
             signingConfig signingConfigs.product_sign
         }
     }
-
+    android.applicationVariants.all { variant ->
+        def appName = rootProject.name
+        def buildType = variant.buildType.name
+        def outputTime = new Date().format("yyyy_MMdd_HHmm", TimeZone.getTimeZone("GMT+08:00"))
+        def versionName = variant.versionName
+        def versionCode = variant.versionCode
+//        if ("release" == buildType) {
+//            def outputDirectory = variant.getPackageApplicationProvider().get().outputDirectory
+//            variant.getPackageApplicationProvider().get().outputDirectory = new File(outputDirectory, "${versionName}")
+//        }
+        variant.outputs.each { output ->
+            if ("release" == buildType) {
+                if (output.outputFileName.endsWith('.apk')) {
+                    output.outputFileName = "${appName}_V${versionName}(${versionCode})_${outputTime}.apk"
+                }
+            } else {
+                if (output.outputFileName.endsWith('.apk')) {
+                    output.outputFileName = "${appName}_V${versionName}(${versionCode})_debug.apk"
+                }
+            }
+        }
+    }
     compileOptions { // JDK版本
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -60,6 +81,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    implementation(name: 'LiteAVSDK_Player_8.1.9717', ext: 'aar')
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.1'
     implementation 'com.alibaba:fastjson:1.2.58'
 }

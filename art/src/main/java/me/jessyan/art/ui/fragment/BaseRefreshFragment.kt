@@ -6,7 +6,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import me.jessyan.art.R
 import me.jessyan.art.mvp.IPresenter
 
-abstract class BaseRefreshFragment<P : IPresenter> : BasesFragment<P>(),
+abstract class BaseRefreshFragment<P : IPresenter> : BaseNewFragment<P>(),
     OnRefreshListener {
     protected lateinit var smartRefreshLayout: SmartRefreshLayout
     override fun initData() {

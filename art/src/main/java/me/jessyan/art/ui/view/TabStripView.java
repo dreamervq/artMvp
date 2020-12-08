@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.mylibrary.mvp.uis.fragment.BasesFragment;
+import com.example.mylibrary.mvp.uis.fragment.BaseNewFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public class TabStripView extends LinearLayout implements View.OnClickListener {
     private int mDefaultSelectedTab = 0;
 
     private int mCurrentSelectedTab;
-    private BasesFragment currentFragment;
+    private BaseNewFragment currentFragment;
     protected TabClickJudgeListener clickJudgeListener;
     private long lastClickTime;
 
@@ -249,11 +249,12 @@ public class TabStripView extends LinearLayout implements View.OnClickListener {
 
             fragment = getFragmentInstance(holder.tag);
             transaction.add(mMainContentLayoutId, fragment, holder.tag);
+            fragment.setUserVisibleHint(true);
         } else {
             transaction.show(fragment);
             fragment.setUserVisibleHint(true);
         }
-        currentFragment = (BasesFragment) fragment;
+        currentFragment = (BaseNewFragment) fragment;
         transaction.commitAllowingStateLoss();
         mCurrentSelectedTab = holder.tabIndex;
         if (mTabSelectListener != null) {
@@ -261,7 +262,7 @@ public class TabStripView extends LinearLayout implements View.OnClickListener {
         }
     }
 
-    public BasesFragment getCurrentFragment(String tag) {
+    public BaseNewFragment getCurrentFragment(String tag) {
         return currentFragment;
     }
 

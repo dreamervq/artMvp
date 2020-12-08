@@ -9,8 +9,8 @@ import android.text.TextUtils;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
-import com.example.mydemok.model.LoginInfo;
-import com.example.mydemok.model.UserEntity;
+import com.example.mydemok.mvp.model.LoginInfo;
+import com.example.mydemok.mvp.model.UserEntity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -3,7 +3,6 @@ package me.jessyan.art.ui.adapters;
 
 import android.view.ViewGroup;
 
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -53,7 +52,16 @@ public class TabPagerAdapter<T extends ITabPager> extends LazyFragmentPagerAdapt
 
     @Override
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        mCurrentFragment = (Fragment) object;
+        Fragment fragment = (Fragment) object;
+        if (fragment != mCurrentFragment) {
+            if (mCurrentFragment != null) {
+                mCurrentFragment.setMenuVisibility(false);
+                mCurrentFragment.setUserVisibleHint(false);
+            }
+            fragment.setMenuVisibility(true);
+            fragment.setUserVisibleHint(true);
+            mCurrentFragment = fragment;
+        }
         super.setPrimaryItem(container, position, object);
     }
 

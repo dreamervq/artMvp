@@ -17,7 +17,7 @@ import me.jessyan.art.ui.adapters.MultiItemTypeAdapter
 import me.jessyan.art.ui.view.WrapContentLinearLayoutManager
 import java.util.*
 
-abstract class BaseRefreshLoadingFragment<T, P : IPresenter> : BasesFragment<P>(),
+abstract class BaseRefreshLoadingFragment<T, P : IPresenter> : BaseNewFragment<P>(),
     OnRefreshListener, OnLoadMoreListener,
     MultiItemTypeAdapter.OnItemClickListener<T>, MultiItemTypeAdapter.OnItemLongClickListener<T> {
     protected val FIRST_PAGE = 1
