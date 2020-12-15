@@ -40,11 +40,11 @@ abstract class BaseMagicTabActivity<T : ITabPager?,P:IPresenter> : BaseSwipeBack
     }
 
     protected fun initPager() {
-        if (mItems == null || mItems!!.size == 0) {
+        if (mItems == null || mItems?.size == 0) {
             return
         }
         mAdapter = pagerAdapter
-        mPager!!.adapter = mAdapter
+        mPager?.adapter = mAdapter
         commonNavigator = CommonNavigator(this)
         val navigatorAdapter: CommonNavigatorAdapter = object : CommonNavigatorAdapter() {
             override fun getCount(): Int {
@@ -55,17 +55,17 @@ abstract class BaseMagicTabActivity<T : ITabPager?,P:IPresenter> : BaseSwipeBack
                 context: Context,
                 index: Int
             ): IPagerTitleView {
-                val currentPos = mPager!!.currentItem
+                val currentPos = mPager?.currentItem
                 val simplePagerTitleView: SimplePagerTitleView = ColorTransitionPagerTitleView(context)
                 setTabTextColor(simplePagerTitleView)
-                simplePagerTitleView.text = mItems?.get(index)!!.title
+                simplePagerTitleView.text = mItems?.get(index)?.title
                 if (index == currentPos) {
                     setSelectedTextSize(simplePagerTitleView)
                 } else {
                     setNormalTextSize(simplePagerTitleView)
                 }
                 simplePagerTitleView.setOnClickListener { v: View? ->
-                    mPager!!.currentItem = index
+                    mPager?.currentItem = index
                 }
                 simplePagerTitleView.setPadding(dp2px(12f), 0, dp2px(12f), 0)
                 return simplePagerTitleView
@@ -79,15 +79,15 @@ abstract class BaseMagicTabActivity<T : ITabPager?,P:IPresenter> : BaseSwipeBack
                 return 1f
             }
         }
-        commonNavigator!!.adapter = navigatorAdapter
-        magicIndicator!!.navigator = commonNavigator
+        commonNavigator?.adapter = navigatorAdapter
+        magicIndicator?.navigator = commonNavigator
         val titleContainer =
-            commonNavigator!!.titleContainer // must after setNavigator
-        titleContainer.showDividers = LinearLayout.SHOW_DIVIDER_MIDDLE
+            commonNavigator?.titleContainer // must after setNavigator
+        titleContainer?.showDividers = LinearLayout.SHOW_DIVIDER_MIDDLE
         val fragmentContainerHelper = FragmentContainerHelper(magicIndicator)
         fragmentContainerHelper.setInterpolator(OvershootInterpolator(2.0f))
         fragmentContainerHelper.setDuration(300)
-        mPager!!.addOnPageChangeListener(object : SimpleOnPageChangeListener() {
+        mPager?.addOnPageChangeListener(object : SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 fragmentContainerHelper.handlePageSelected(position)
                 navigatorAdapter.notifyDataSetChanged()

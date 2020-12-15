@@ -1,11 +1,13 @@
 package com.example.mydemok.mvp.model
 
 
-data class ResponseBase<T>(
-    var error_code: Int,
-    var error_msg: String,
-    var data: T,
-    var msg: String,
-    var max_id: Int,
-    var max: Int
-)
+class ResponseBase<T> {
+    var error_code = 0
+    var error_msg: String? = null
+    var data: T? = null
+    var msg: String? = null
+    var max_id = 0
+    var max = 0
+    var count: String? = null
+    constructor()
+}

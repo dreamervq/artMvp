@@ -1,3 +1,11 @@
 package com.example.mydemok.mvp.model
 
-data class UserEntity(var sessionid: String, var id: String)
+class UserEntity {
+    var sessionid: String? = null
+    var id: String? = null
+    var phone: String? = null
+    var nickname: String? = null
+
+    constructor()
+}
+

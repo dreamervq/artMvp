@@ -6,7 +6,8 @@ import me.jessyan.art.mvp.IPresenter
 import me.jessyan.art.ui.view.StateLayout
 import me.jessyan.art.ui.view.emptyprovider.FadeViewAnimProvider
 
-abstract class BaseStateRefreshingLoadingActivity<T,P:IPresenter> : BaseRefreshLoadingActivity<T,P>() {
+abstract class BaseStateRefreshingLoadingActivity<T, P : IPresenter> :
+    BaseRefreshLoadingActivity<T, P>() {
     protected var stateLayout: StateLayout? = null
     override fun init(savedInstanceState: Bundle?) {
         super.init(savedInstanceState)
@@ -15,12 +16,15 @@ abstract class BaseStateRefreshingLoadingActivity<T,P:IPresenter> : BaseRefreshL
     }
 
     protected fun initStateLayout() {
-        stateLayout!!.setViewSwitchAnimProvider(FadeViewAnimProvider())
-        stateLayout!!.setErrorAndEmptyAction {
-            stateLayout!!.showProgressView(getString(R.string.loading))
-            onRefresh()
+        stateLayout?.let {
+            it.setViewSwitchAnimProvider(FadeViewAnimProvider())
+            it.setErrorAndEmptyAction {
+                stateLayout?.showProgressView(getString(R.string.loading))
+                onRefresh()
+            }
+            it.showProgressView(getString(R.string.loading))
         }
-        stateLayout!!.showProgressView(getString(R.string.loading))
+
     }
 
     override fun refreshComplete(loadSuccess: Boolean) {
@@ -36,29 +40,31 @@ abstract class BaseStateRefreshingLoadingActivity<T,P:IPresenter> : BaseRefreshL
     protected fun initState(loadSuccess: Boolean) {
         if (loadSuccess) {
             if (mCurrPage == FIRST_PAGE && mItems.size == 0) {
-                stateLayout!!.showEmptyView(emptyTip)
+                stateLayout?.showEmptyView(emptyTip)
             } else {
-                stateLayout!!.showContentView()
+                stateLayout?.showContentView()
             }
         } else {
             if (mCurrPage == FIRST_PAGE) {
-                stateLayout!!.showErrorView(getString(R.string.error))
+                stateLayout?.showErrorView(getString(R.string.error))
             }
         }
     }
 
     protected fun showState(state: Int) {
-        when (state) {
-            STATE_CONTENT -> stateLayout!!.showContentView()
-            STATE_EMPTY -> stateLayout!!.showEmptyView(
-                emptyTip
-            )
-            STATE_PROGRESS -> stateLayout!!.showProgressView(
-                getString(R.string.loading)
-            )
-            STATE_ERROR -> stateLayout!!.showErrorView(
-                getString(R.string.error)
-            )
+        stateLayout?.let {
+            when (state) {
+                STATE_CONTENT -> it.showContentView()
+                STATE_EMPTY -> it.showEmptyView(
+                    emptyTip
+                )
+                STATE_PROGRESS -> it.showProgressView(
+                    getString(R.string.loading)
+                )
+                STATE_ERROR -> it.showErrorView(
+                    getString(R.string.error)
+                )
+            }
         }
     }
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.alibaba.fastjson.JSON;
 import com.example.mydemok.manager.LoginManager;
 import com.example.mydemok.mvp.ui.dialog.TipsDialog;
+import com.example.mydemok.utils.GsonUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,7 +27,7 @@ public abstract class MyResponse<T> extends ErrorHandleSubscriber<T> {
     @Override
     public void onNext(T t) {
         try {
-            String s = JSON.toJSONString(t);
+            String s = GsonUtil.toJson(t);
             JSONObject obj = null;
             obj = new JSONObject(s);
             AppManager appManager = AppManager.getAppManager();

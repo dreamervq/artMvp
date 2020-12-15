@@ -31,36 +31,34 @@ import android.nfc.Tag
  * error_code : 0
  * error_msg :
  */
-data class SplashAD(
-    var keep: Int,
-    var id: Long,
-    var modelid: Int,
-    var module: Int,
-    var adv_data: AdvLiveData,
-    var live_type: Int,
-    var adv_type: Int,
-    var title: String,
-    var image: List<String>,
-    var adv_image: List<String>,
-    var status: Int,
-    var cid_type: Int,
-    var cid: Long,
-    var url: String,
-    var share_url: String,
-    var desc: String,
-    var views: Int,
-    var video_url: String,
-    var video_duration: String,
-    var video_image: String,
-    var money: String,
-    var image_width: Int,
-    var image_height: Int,
-    var show_height: Int,
-    var error_code: Int,
-    var error_msg: String,
-    var tags: List<Tag>,
-    var content_id: String,
-    var bs_play_url: String,
-    var bs_type: String,
-    var bs_id: String
-)
+class SplashAD {
+    var keep = 0
+    var id = 0L
+    var modelid = 0
+    var module = 0
+    var live_type = 0
+    var adv_data: AdvLiveData? = null
+    var adv_type = 0
+    var title: String? = null
+    var image: String? = null
+    var adv_image: String? = null
+    var status = 0
+    var cid_type = 0
+    var cid = 0L
+    var url: String? = null
+    var share_url: String? = null
+    var desc: String? = null
+    var views = 0
+    var video_url: String? = null
+    var video_duration: String? = null
+    var video_image: String? = null
+    var money: String? = null
+    var image_width = 0
+    var image_height = 0
+    var show_height = 0
+    var error_code = 0
+    var error_msg: String? = null
+    var tags: List<Tag>? = null
+
+    constructor()
+}

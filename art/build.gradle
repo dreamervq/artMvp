@@ -118,5 +118,7 @@ dependencies {
 //    api rootProject.ext.dependencies["Android-SpinKit"]
     //wave
     api 'com.github.ybq:Android-SpinKit:1.2.0'
+
+    api rootProject.ext.dependencies["tbssdk"]
 }
 

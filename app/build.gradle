@@ -36,8 +36,8 @@ android {
         }
         release {
             minifyEnabled true
-//            zipAlignEnabled true  //压缩优化
-//            shrinkResources true  //移出无用资源
+            zipAlignEnabled true  //压缩优化
+            shrinkResources true  //移出无用资源
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.product_sign
         }
@@ -77,11 +77,15 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation project(path: ':art')
+    implementation(name: 'alipaySdk-15.7.9-20200727142846', ext: 'aar')
+    implementation files('libs/AMap3DMap_7.5.0_AMapNavi_7.5.0_AMapSearch_7.4.0_AMapLocation_5.1.0_20200723.jar')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation(name: 'LiteAVSDK_Player_8.1.9717', ext: 'aar')
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.1'
-    implementation 'com.alibaba:fastjson:1.2.58'
+
+    api rootProject.ext.dependencies["fastjson"]
+    api rootProject.ext.dependencies["zxing"]
 }

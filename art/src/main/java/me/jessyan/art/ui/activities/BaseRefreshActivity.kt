@@ -20,14 +20,14 @@ abstract class BaseRefreshActivity<P : IPresenter> : BaseSwipeBackActivity<P>(),
     }
 
     fun autoRefresh() {
-        smartRefreshLayout!!.postDelayed({
-            smartRefreshLayout!!.autoRefresh()
+        smartRefreshLayout?.postDelayed({
+            smartRefreshLayout?.autoRefresh()
             onRefresh()
         }, 100)
     }
 
     protected abstract fun onRefresh()
     protected fun refreshComplete() {
-        smartRefreshLayout!!.finishRefresh()
+        smartRefreshLayout?.finishRefresh()
     }
 }

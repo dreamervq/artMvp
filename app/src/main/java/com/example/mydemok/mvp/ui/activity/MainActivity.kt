@@ -21,11 +21,11 @@ import com.example.mydemok.mvp.ui.listener.TypeEnum
 import com.example.mydemok.utils.AppUtil
 import com.example.mydemok.utils.CommonUtil
 import com.example.mydemok.utils.DownloadApkUtil
-import com.example.mydemok.utils.FileUtil
 import com.example.mylibrary.mvp.uis.activities.BaseActivity
 import com.example.mylibrary.mvp.uis.fragment.BaseNewFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import me.jessyan.art.mvp.Message
+import me.jessyan.art.ui.adapters.BaseAdapter
 import me.jessyan.art.ui.view.TabStripView
 import me.jessyan.art.utils.ArtUtils
 import me.jessyan.art.utils.TinyPref
@@ -151,7 +151,7 @@ class MainActivity : BaseActivity<IndexPresenter>(), TabStripView.OnTabSelectedL
                     val version: Version? = message.obj as Version
                     if (version != null &&
                         !TextUtils.isEmpty(version.version) &&
-                        CommonUtil.compareVersion(AppUtil.getAppVersion(), version.version) < 0
+                        CommonUtil.compareVersion(AppUtil.getAppVersion(), version.version!!) < 0
                     ) {
                         if (version.force) {
                             TinyPref.getInstance()
@@ -186,7 +186,7 @@ class MainActivity : BaseActivity<IndexPresenter>(), TabStripView.OnTabSelectedL
         tipDialog.setOnOperatClickListener(object :
             TipsDialog.OnDialogClickListener<String> {
             override fun onEnsureClick(param: String?) {
-                startUpdateApp(version.url, version.version)
+                startUpdateApp(version.url!!, version.version!!)
             }
 
             override fun onCancelClick(param: String?) {

@@ -15,6 +15,7 @@ import com.bumptech.glide.request.target.Target
 import com.example.mydemok.R
 import com.example.mydemok.application.Constants
 import com.example.mydemok.manager.CardManager
+import com.example.mydemok.mvp.model.RewardConfigInfo
 import com.example.mydemok.mvp.model.SplashAD
 import com.example.mydemok.mvp.presenter.SplanPresenter
 import com.example.mydemok.mvp.ui.adapter.SplanFirstAdapter
@@ -42,8 +43,7 @@ import kotlin.math.ceil
 @Suppress("DEPRECATED_IDENTITY_EQUALS")
 class SplanActivity : BaseActivity<SplanPresenter>(), ITXVodPlayListener {
     private val DELAY_KEEP_TIME_MIN = 3
-    private lateinit var mPlayer: TXVodPlayer
-    private val GET_APP_AGREEMENT = 0x112
+    private var mPlayer: TXVodPlayer? = null
     private var mSplashAD: SplashAD? = null
     private var subscribe: Disposable? = null
     private var txPhoneStateListener: TXPhoneStateListener? = null
@@ -64,15 +64,16 @@ class SplanActivity : BaseActivity<SplanPresenter>(), ITXVodPlayListener {
         imgCover.visibility = View.VISIBLE
         if (!TinyPref.getInstance().getBoolean(Constants.PREF_FIRST, false)) {
             imgCover.visibility = View.GONE
+            view_pager_first.visibility = View.VISIBLE
             var splanFirstAdapter = SplanFirstAdapter(this)
-            view_pager_first.setAdapter(splanFirstAdapter)
+            view_pager_first.adapter = splanFirstAdapter
         } else {
-            getPresenter().getSplashAD(Message.obtain(this, 11))
+            getPresenter().getSplashAD(Message.obtain(this, Constants.ARG_MAIN))
             subscribe = Observable.timer(3, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    if (isFinishing || mSplashAD == null) {
+                    if (isFinishing || mSplashAD != null) {
                         return@subscribe
                     }
                     toMainPage()
@@ -80,35 +81,42 @@ class SplanActivity : BaseActivity<SplanPresenter>(), ITXVodPlayListener {
 
 
         }
-        getPresenter().getRewardConfig(Message.obtain(this))
-        reqAppAgreement()
+        getPresenter().getRewardConfig(Message.obtain(this, Constants.ARG_1))
+        getPresenter().getAppAgreement(Message.obtain(this))
     }
 
-    private fun reqAppAgreement() {
-        val message = Message.obtain(this)
-        message.arg1 = GET_APP_AGREEMENT
-        getPresenter().getSplashAD(message)
-    }
 
     override fun obtainPresenter(): SplanPresenter? {
         return SplanPresenter(ArtUtils.obtainAppComponentFromContext(this))
     }
 
     override fun handleMessage(message: Message) {
-        if (Constants.KEY_SUCCESS == message.arg1) {
-            mSplashAD = message.obj as SplashAD
-            if (NetworkUtil.isConnected()) {
-                if (mSplashAD != null && (!TextUtils.isEmpty(mSplashAD!!.video_url) || mSplashAD?.image != null && mSplashAD?.image?.size!! > 0)) {
-                    updateADView(mSplashAD)
+
+        when (message.arg1) {
+            Constants.ARG_MAIN -> {
+                if (Constants.KEY_SUCCESS == message.what) {
+                    mSplashAD = message.obj as SplashAD
+                    if (NetworkUtil.isConnected()) {
+                        if (mSplashAD != null && (!TextUtils.isEmpty(mSplashAD!!.video_url) || mSplashAD?.image != null)) {
+                            updateADView(mSplashAD)
+                        } else {
+                            toMainPage()
+                        }
+                    } else {
+                        toMainPage()
+                    }
                 } else {
-                    toMainPage()
+                    mSplashAD = null
                 }
-            } else {
-                toMainPage()
             }
-        } else {
-            mSplashAD = null
+            Constants.ARG_1->{
+                var rewardConfig: RewardConfigInfo = message.obj as RewardConfigInfo
+               // GlobalVariable.REWARD_CONFIG_INFO = responseBase
+            }
+            else -> {
+            }
         }
+
 
     }
 
@@ -122,7 +130,7 @@ class SplanActivity : BaseActivity<SplanPresenter>(), ITXVodPlayListener {
                 scroll_view.visibility = View.VISIBLE
                 scroll_view.isClickable = false
                 GlideArt.with(this)
-                    .load(mSplashAD.image[0])
+                    .load(mSplashAD.image)
                     .placeholder(R.mipmap.img_cover)
                     .apply(requestOptions())
                     .listener(object : RequestListener<Drawable> {
@@ -184,25 +192,28 @@ class SplanActivity : BaseActivity<SplanPresenter>(), ITXVodPlayListener {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         fl_video.visibility = View.VISIBLE
         mPlayer = TXVodPlayer(this)
-        mPlayer.setRenderRotation(TXLiveConstants.RENDER_ROTATION_PORTRAIT)
-        mPlayer.setRenderMode(TXLiveConstants.RENDER_MODE_ADJUST_RESOLUTION)
-        mPlayer.setVodListener(this)
-        mPlayer.setMute(isMute)
-        var config = TXVodPlayConfig()
-        config.setCacheFolderPath(FileUtil.DIR_VIDEO)
-        config.setMaxCacheItems(0)
-        mPlayer.setConfig(config)
-        mPlayer.setAutoPlay(false)
-        mPlayer.setPlayerView(tx_video)
-        txPhoneStateListener = TXPhoneStateListener(this, mPlayer)
-        txPhoneStateListener?.startListen()
-        mPlayer.startPlay(mSplashAD.video_url)
-        imgCover.visibility = View.GONE
-        img_voice.setOnClickListener {
-            isMute != isMute
-            mPlayer.setMute(isMute)
-            img_voice.isSelected = !isMute
+        mPlayer?.let {
+            it.setRenderRotation(TXLiveConstants.RENDER_ROTATION_PORTRAIT)
+            it.setRenderMode(TXLiveConstants.RENDER_MODE_ADJUST_RESOLUTION)
+            it.setVodListener(this)
+            it.setMute(isMute)
+            var config = TXVodPlayConfig()
+            config.setCacheFolderPath(FileUtil.DIR_VIDEO)
+            config.setMaxCacheItems(0)
+            it.setConfig(config)
+            it.setAutoPlay(false)
+            it.setPlayerView(tx_video)
+            txPhoneStateListener = TXPhoneStateListener(this, it)
+            txPhoneStateListener?.startListen()
+            it.startPlay(mSplashAD.video_url)
+            imgCover.visibility = View.GONE
+            img_voice.setOnClickListener {
+                isMute != isMute
+                mPlayer?.setMute(isMute)
+                img_voice.isSelected = !isMute
+            }
         }
+
         fl_video.setOnClickListener(this::onAdClick)
     }
 
@@ -264,7 +275,7 @@ class SplanActivity : BaseActivity<SplanPresenter>(), ITXVodPlayListener {
 
     @Synchronized
     private fun toMainPage() {
-        startActivity<MainTestActivity>()
+        startActivity<MainActivity>()
         finish()
     }
 

@@ -106,6 +106,9 @@ ext {
             "umeng-analytics"             : "com.umeng.analytics:analytics:6.0.1",
             "recyclerview-animators"      : "jp.wasabeef:recyclerview-animators:2.2.7",
             "recyclerview-flexibledivider": "com.yqritc:recyclerview-flexibledivider:1.2.9",
-            "Android-SpinKit"             : "com.github.ybq:Android-SpinKit:1.2.09"
+            "Android-SpinKit"             : "com.github.ybq:Android-SpinKit:1.2.09",
+            "tbssdk"                      : "com.tencent.tbs.tbssdk:sdk:43697",
+            "fastjson"                    : "com.alibaba:fastjson:1.2.58",
+            "zxing"                    : "com.google.zxing:core:3.3.2"
     ]
 }

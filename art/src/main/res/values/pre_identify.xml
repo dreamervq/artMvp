@@ -9,6 +9,8 @@
     <item name="pre_refresh" type="id" />
     <item name="pre_recycler_view" type="id" />
     <item name="pre_web_view" type="id" />
+    <item name="pre_web_progress" type="id" />
+    <item name="pre_web_root" type="id" />
 
     <!--color-->
     <item name="colorPrimary" type="color" />

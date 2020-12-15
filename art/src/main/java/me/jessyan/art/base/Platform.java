@@ -33,8 +33,8 @@ public class Platform {
     public static final String WECHAT_TIMELINE = "wechat_timeline";
     public static final String QQ = "qq";
     public static final String QZONE = "qzone";
-    public static final String OTHER = "other";
-    public static final String OTHER1 = "haibao";
+    public static final String COPY = "copy";
+    public static final String HAIBAO = "haibao";
 
     public static final String KEY_WECHAT = "wxaa51cfa4437f4881";
     public static final String SECRET_WECHAT = "58908c8fe21015b0bade4cae7cc2e39a";

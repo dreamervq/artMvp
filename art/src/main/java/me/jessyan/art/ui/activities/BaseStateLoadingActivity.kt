@@ -15,27 +15,33 @@ abstract class BaseStateLoadingActivity<P : IPresenter> : BaseSwipeBackActivity<
     }
 
     protected fun initStateLayout() {
-        stateLayout!!.setViewSwitchAnimProvider(FadeViewAnimProvider())
-        stateLayout!!.setErrorAndEmptyAction { autoLoad() }
-        stateLayout!!.showProgressView(getString(R.string.loading))
-        stateLayout!!.postDelayed({ loadData() }, 200)
+        stateLayout?.let {
+            it.setViewSwitchAnimProvider(FadeViewAnimProvider())
+            it.setErrorAndEmptyAction { autoLoad() }
+            it.showProgressView(getString(R.string.loading))
+            it.postDelayed({ loadData() }, 200)
+        }
+
     }
 
     fun autoLoad() {
-        stateLayout!!.showProgressView(getString(R.string.loading))
+        stateLayout?.showProgressView(getString(R.string.loading))
         loadData()
     }
 
     protected abstract fun loadData()
     protected fun loadingComplete(state: Int) {
-        when (state) {
-            STATE_CONTENT -> stateLayout!!.showContentView()
-            STATE_EMPTY -> stateLayout!!.showEmptyView(emptyTip)
-            STATE_PROGRESS -> stateLayout!!.showProgressView(
-                getString(R.string.loading)
-            )
-            STATE_ERROR -> stateLayout!!.showErrorView(getString(R.string.error))
+        stateLayout?.let {
+            when (state) {
+                STATE_CONTENT -> it.showContentView()
+                STATE_EMPTY -> it.showEmptyView(emptyTip)
+                STATE_PROGRESS -> it.showProgressView(
+                    getString(R.string.loading)
+                )
+                STATE_ERROR -> it.showErrorView(getString(R.string.error))
+            }
         }
+
     }
 
     protected val emptyTip: String

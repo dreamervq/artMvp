@@ -10,7 +10,10 @@
     <!--存储-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <!--允许程序读写手机状态和身份-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".application.App"
@@ -21,7 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".mvp.ui.activity.MainActivity"
+            android:name=".mvp.ui.activity.SplanActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".mvp.ui.activity.SplanActivity"
+            android:name=".mvp.ui.activity.MainActivity"
             android:screenOrientation="portrait" />
 
         <meta-data

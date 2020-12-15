@@ -38,4 +38,7 @@ public interface EventBusTags {
     String EVENT_VIEWPAGER_CHANGEITEM  = "7";
     String EVENT_CHANGE_USERINFO  = "8";
     String EVENT_LOGOUT = "9";
+
+    String EVENT_LOGIN_SUCCESS= "16";
+    String EVENT_SHARE_SUCCESS= "17";
 }

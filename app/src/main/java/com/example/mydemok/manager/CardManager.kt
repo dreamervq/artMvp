@@ -1,12 +1,8 @@
 package com.example.mydemok.manager
 
-import android.app.Activity
 import android.content.Context
-import android.text.TextUtils
-import android.util.Log
 import com.example.mydemok.mvp.model.AdvLiveData
 import com.example.mydemok.mvp.ui.listener.TypeEnum
-import me.jessyan.art.utils.ArtUtils
 
 object CardManager {
     fun launchCardClick(
@@ -49,7 +45,7 @@ object CardManager {
         share_url: String?,
         title: String?,
         liveType: Int,
-        itemInfo: AdvLiveData
+        itemInfo: AdvLiveData?
     ) {
         //advtype广告模块：1资讯 2拍客 3晒照 4爆料 5我型我秀 7问吧8启动页
         if (advtype == 1) {

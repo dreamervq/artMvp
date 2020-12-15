@@ -16,10 +16,13 @@ abstract class BaseStateRefreshingActivity<P:IPresenter> : BaseRefreshActivity<P
     }
 
     private fun initStateLayout() {
-        stateLayout!!.setViewSwitchAnimProvider(FadeViewAnimProvider())
-        stateLayout!!.setErrorAndEmptyAction { autoLoading() }
-        stateLayout!!.showProgressView(getString(R.string.loading))
-        stateLayout!!.postDelayed({ onRefresh() }, 200)
+        stateLayout?.let {
+            it.setViewSwitchAnimProvider(FadeViewAnimProvider())
+            it.setErrorAndEmptyAction { autoLoading() }
+            it.showProgressView(getString(R.string.loading))
+            it.postDelayed({ onRefresh() }, 200)
+        }
+
     }
 
     protected fun autoLoading() {
@@ -28,33 +31,38 @@ abstract class BaseStateRefreshingActivity<P:IPresenter> : BaseRefreshActivity<P
     }
 
     protected fun loadingComplete(state: Int) {
-        when (state) {
-            STATE_CONTENT -> stateLayout!!.showContentView()
-            STATE_EMPTY -> stateLayout!!.showEmptyView(
-                emptyTip
-            )
-            STATE_PROGRESS -> stateLayout!!.showProgressView(
-                getString(R.string.loading)
-            )
-            STATE_ERROR -> stateLayout!!.showErrorView(
-                getString(R.string.error)
-            )
+        stateLayout?.let {
+            when (state) {
+                STATE_CONTENT -> it.showContentView()
+                STATE_EMPTY -> it.showEmptyView(
+                    emptyTip
+                )
+                STATE_PROGRESS -> it.showProgressView(
+                    getString(R.string.loading)
+                )
+                STATE_ERROR -> it.showErrorView(
+                    getString(R.string.error)
+                )
+            }
         }
+
         refreshComplete()
     }
 
     protected fun showState(state: Int) {
-        when (state) {
-            STATE_CONTENT -> stateLayout!!.showContentView()
-            STATE_EMPTY -> stateLayout!!.showEmptyView(
-                emptyTip
-            )
-            STATE_PROGRESS -> stateLayout!!.showProgressView(
-                getString(R.string.loading)
-            )
-            STATE_ERROR -> stateLayout!!.showErrorView(
-                getString(R.string.error)
-            )
+        stateLayout?.let {
+            when (state) {
+                STATE_CONTENT -> it.showContentView()
+                STATE_EMPTY -> it.showEmptyView(
+                    emptyTip
+                )
+                STATE_PROGRESS -> it.showProgressView(
+                    getString(R.string.loading)
+                )
+                STATE_ERROR -> it.showErrorView(
+                    getString(R.string.error)
+                )
+            }
         }
     }
 

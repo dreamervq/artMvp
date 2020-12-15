@@ -16,7 +16,6 @@ import me.jessyan.art.R
 import me.jessyan.art.mvp.IPresenter
 import me.jessyan.art.ui.adapters.MultiItemTypeAdapter
 import me.jessyan.art.ui.view.WrapContentLinearLayoutManager
-import java.util.*
 
 abstract class BaseRefreshLoadingActivity<T, P : IPresenter> : BaseSwipeBackActivity<P>(),
     OnRefreshListener, OnLoadMoreListener,
@@ -24,7 +23,7 @@ abstract class BaseRefreshLoadingActivity<T, P : IPresenter> : BaseSwipeBackActi
     protected val FIRST_PAGE = 1
     protected var mLayoutRefresh: SmartRefreshLayout? = null
     protected var mRecyclerView: RecyclerView? = null
-    protected var mItems = ArrayList<T>()
+    protected var mItems = mutableListOf<T>()
     protected var mAdapter: RecyclerView.Adapter<*>? = null
     protected var mLayoutManager: RecyclerView.LayoutManager? = null
     protected var mCurrPage = FIRST_PAGE
@@ -37,13 +36,13 @@ abstract class BaseRefreshLoadingActivity<T, P : IPresenter> : BaseSwipeBackActi
     }
 
     protected fun setupRecyclerView() {
-        mRecyclerView!!.layoutManager = initLayoutManager()
-        mRecyclerView!!.adapter = initAdapter()
+        mRecyclerView?.layoutManager = initLayoutManager()
+        mRecyclerView?.adapter = initAdapter()
         if (isShowDivider) setDivider()
     }
 
     protected fun setDivider() {
-        mRecyclerView!!.addItemDecoration(
+        mRecyclerView?.addItemDecoration(
             HorizontalDividerItemDecoration.Builder(this)
                 .colorResId(R.color.black_divider)
                 .sizeResId(R.dimen.spacing_divider)
@@ -86,7 +85,7 @@ abstract class BaseRefreshLoadingActivity<T, P : IPresenter> : BaseSwipeBackActi
     }
 
     protected fun autoRefresh() {
-        mRecyclerView!!.postDelayed({ mLayoutRefresh!!.autoRefresh() }, 100)
+        mRecyclerView?.postDelayed({ mLayoutRefresh?.autoRefresh() }, 100)
     }
 
     override fun onRefresh(@NonNull refreshLayout: RefreshLayout) {
@@ -106,11 +105,11 @@ abstract class BaseRefreshLoadingActivity<T, P : IPresenter> : BaseSwipeBackActi
         if (!loadSuccess && mCurrPage > FIRST_PAGE) {
             mCurrPage--
         }
-        mAdapter!!.notifyDataSetChanged()
-        mLayoutRefresh!!.finishRefresh()
-        mLayoutRefresh!!.setEnableLoadMore(loadSuccess && mItems.size >= 15)
+        mAdapter?.notifyDataSetChanged()
+        mLayoutRefresh?.finishRefresh()
+        mLayoutRefresh?.setEnableLoadMore(loadSuccess && mItems.size >= 15)
         if (mCurrPage > FIRST_PAGE) {
-            mLayoutRefresh!!.finishLoadMore(true)
+            mLayoutRefresh?.finishLoadMore(true)
         }
     }
 
@@ -118,10 +117,10 @@ abstract class BaseRefreshLoadingActivity<T, P : IPresenter> : BaseSwipeBackActi
         if (!loadSuccess && mCurrPage > FIRST_PAGE) {
             mCurrPage--
         }
-        mAdapter!!.notifyDataSetChanged()
-        mLayoutRefresh!!.finishRefresh()
-        mLayoutRefresh!!.setEnableLoadMore(loadSuccess && mCurrPage < totalPage)
-        mLayoutRefresh!!.finishLoadMore(true)
+        mAdapter?.notifyDataSetChanged()
+        mLayoutRefresh?.finishRefresh()
+        mLayoutRefresh?.setEnableLoadMore(loadSuccess && mCurrPage < totalPage)
+        mLayoutRefresh?.finishLoadMore(true)
     }
 
     override fun onItemClick(view: View, holder: RecyclerView.ViewHolder, item: T, position: Int) {

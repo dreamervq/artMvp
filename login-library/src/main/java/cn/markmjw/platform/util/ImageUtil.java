@@ -3,7 +3,9 @@ package cn.markmjw.platform.util;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
@@ -44,6 +46,32 @@ public class ImageUtil {
         return result;
     }
 
+
+    public static Bitmap zoomForWxMini(Bitmap bitmap,int w,int h){
+        if (null == bitmap) {
+            return null;
+        }
+       try{
+           Bitmap mBitmap=Bitmap.createBitmap(w,h,Bitmap.Config.ARGB_8888);
+           Canvas mCanvas=new Canvas(mBitmap);
+           mCanvas.drawColor(Color.WHITE);
+           Paint paint=new Paint();
+           mCanvas.drawBitmap(mBitmap,0.0f,0.0f,paint);
+           int width_main=bitmap.getWidth();
+           int height_main=bitmap.getHeight();
+           if(width_main>height_main){
+               mCanvas.drawBitmap(bitmap,0,(h-height_main)/2,paint);
+           }else{
+               mCanvas.drawBitmap(bitmap,(w-width_main)/2,0,paint);
+           }
+           mCanvas.save();
+           mCanvas.restore();
+           return mBitmap;
+       }catch (OutOfMemoryError ex){
+           return null;
+       }
+    }
+
     /**
      * 缩放图片
      *
@@ -57,13 +85,13 @@ public class ImageUtil {
         }
 
         try {
+
             float scaleWidth = w * 1.0f / bitmap.getWidth();
             float scaleHeight = h * 1.0f / bitmap.getHeight();
 
             // 重新生成一个放大/缩小后图片
             Matrix matrix = new Matrix();
             matrix.postScale(scaleWidth, scaleHeight);
-
             Bitmap result = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
             Canvas canvas = new Canvas(result);
 

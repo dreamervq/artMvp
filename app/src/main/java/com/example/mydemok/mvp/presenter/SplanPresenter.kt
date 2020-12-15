@@ -46,13 +46,11 @@ class SplanPresenter(appComponent: AppComponent) : BasePresenter<CommonRepositor
                 override fun onNext(appAgreement: AppAgreement) {
                     msg.what = Constants.KEY_SUCCESS
                     Constants.APP_AGREEMENT = appAgreement
-                    msg.handleMessageToTarget()
                 }
 
                 override fun onError(t: Throwable) {
                     super.onError(t)
                     msg.what = Constants.KEY_FAILED
-                    msg.handleMessageToTarget()
                 }
             })
     }
@@ -64,7 +62,7 @@ class SplanPresenter(appComponent: AppComponent) : BasePresenter<CommonRepositor
             .subscribe(object : MyResponse<ResponseBase<RewardConfigInfo?>>(mErrorHandler) {
                 override fun onSuccess(response: ResponseBase<RewardConfigInfo?>) {
                     msg.what = Constants.KEY_SUCCESS
-                    msg.obj = response
+                    msg.obj = response.data
                     msg.handleMessageToTarget()
                 }
 

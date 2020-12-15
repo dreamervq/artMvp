@@ -212,8 +212,10 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity<P>,
             loadingDialog?.setCancelable(allowBackCancel)
             loadingDialog?.setCanceledOnTouchOutside(false)
         }
-        if (!loadingDialog!!.isShowing()) {
-            loadingDialog?.showLoading(message)
+        loadingDialog?.let {
+            if (!it.isShowing) {
+                it.showLoading(message)
+            }
         }
     }
 

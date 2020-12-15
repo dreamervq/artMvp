@@ -21,7 +21,7 @@ abstract class BaseDialog : Dialog {
 
     private fun init(context: Context) {
         mContext = context
-        setContentView(layoutRes)
+        setContentView(getLayoutRes())
         val window = window
         if (window != null) {
             window.setGravity(Gravity.BOTTOM)
@@ -49,7 +49,7 @@ abstract class BaseDialog : Dialog {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
     }
@@ -62,7 +62,8 @@ abstract class BaseDialog : Dialog {
     }
 
     abstract fun initView()
-    abstract val layoutRes: Int
+
+    abstract fun getLayoutRes():Int
     fun isGravityCenter(): Boolean {
         return false
     }

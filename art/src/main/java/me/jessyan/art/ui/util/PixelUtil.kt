@@ -26,6 +26,11 @@ object PixelUtil {
         return (value * scale + 0.5f).toInt()
     }
 
+    @JvmStatic
+    fun dp2px(value: Int): Int {
+        return dp2px(value.toFloat())
+    }
+
     /**
      * px to dp.
      *

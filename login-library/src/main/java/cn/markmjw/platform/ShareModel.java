@@ -3,6 +3,10 @@ package cn.markmjw.platform;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 
+import java.net.URLEncoder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * 分享实体类
  * <p/>
@@ -22,6 +26,21 @@ public class ShareModel {
     private String description;
     private String shareUrl;
     private Bitmap thumbnail;
+
+    /**
+     * 小程序页面路经
+     */
+    private String minipath;
+
+    /**
+     * 小程序原始id
+     */
+    private String miniusername;
+
+    /**
+     *是否走小程序分享
+     */
+    private boolean ismini=false;
 
     /**
      * 分享的图片url或者本地path，注意
@@ -55,6 +74,7 @@ public class ShareModel {
 
     public void setShareUrl(String shareUrl) {
         this.shareUrl = shareUrl;
+        this.checkMiniForUrl();
     }
 
     public Bitmap getThumbnail() {
@@ -95,6 +115,30 @@ public class ShareModel {
         }
     }
 
+    public String getMinipath() {
+        return minipath;
+    }
+
+    public void setMinipath(String minipath) {
+        this.minipath = minipath;
+    }
+
+    public String getMiniusername() {
+        return miniusername;
+    }
+
+    public void setMiniusername(String miniusername) {
+        this.miniusername = miniusername;
+    }
+
+    public boolean isIsmini() {
+        return ismini;
+    }
+
+    public void setIsmini(boolean ismini) {
+        this.ismini = ismini;
+    }
+
     @Override
     public String toString() {
         return "ShareModel{" +
@@ -105,5 +149,29 @@ public class ShareModel {
                 ", imageUri='" + imageUri + '\'' +
                 ", text='" + text + '\'' +
                 '}';
+    }
+
+    /**
+     * 检查URL地址是否通过小程打开
+     */
+    private void checkMiniForUrl(){
+        String [][]url_regex=new String[][]{
+                {"https://(webzdg.sun0769.com|appzdg.sun0769.com|wwwzdg.sun0769.com)/app/activity-vote/"
+                 ,"gh_ba15dd5d67eb","/pages/detail/detail?url="+ URLEncoder.encode(this.getShareUrl()+"&mini=1")},
+                {"https://(webzdg.sun0769.com|appzdg.sun0769.com|wwwzdg.sun0769.com)/app/activity-outdoor-sign/"
+                 ,"gh_ba15dd5d67eb","/pages/detail/detail?url="+ URLEncoder.encode(this.getShareUrl()+"&mini=1")},
+                {"https://(webzdg.sun0769.com|appzdg.sun0769.com|wwwzdg.sun0769.com)/app/activity-sign/"
+                 ,"gh_ba15dd5d67eb","/pages/detail/detail?url="+ URLEncoder.encode(this.getShareUrl()+"&mini=1")}
+        };
+        for(int i=0;i<url_regex.length;i++){
+            Pattern r= Pattern.compile(url_regex[i][0]);
+            Matcher m=r.matcher(this.getShareUrl());
+            if(m.find()){//部分配对成功
+                this.setIsmini(true);
+                this.setMinipath(url_regex[i][2]);
+                this.setMiniusername(url_regex[i][1]);
+                break;
+            }
+        }
     }
 }
