@@ -32,6 +32,8 @@ abstract class BaseRefreshLoadingFragment<T, P : IPresenter> : BaseNewFragment<P
         super.initData()
         mLayoutRefresh = getView<SmartRefreshLayout>(R.id.pre_refresh)
         mRecyclerView = getView<RecyclerView>(R.id.pre_recycler_view)
+        if (mRecyclerView == null || mLayoutRefresh == null)
+            throw NullPointerException("missing key views")
         setupRecyclerView()
         setupRefreshAndLoadMore()
     }

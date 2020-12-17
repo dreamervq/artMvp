@@ -4,20 +4,25 @@ import me.jessyan.art.R
 import me.jessyan.art.mvp.IPresenter
 import me.jessyan.art.ui.view.StateLayout
 import me.jessyan.art.ui.view.emptyprovider.FadeViewAnimProvider
+import java.lang.NullPointerException
 
 abstract class BaseStateLoadingFragment<P : IPresenter> : BaseNewFragment<P>() {
     protected var stateLayout: StateLayout? = null
     override fun initData() {
         super.initData()
         stateLayout = getView<StateLayout>(R.id.stateLayout)
+        if (stateLayout==null)
+            throw NullPointerException("missing key views")
         initStateLayout()
     }
 
     protected fun initStateLayout() {
-        stateLayout!!.setViewSwitchAnimProvider(FadeViewAnimProvider())
-        stateLayout!!.setErrorAndEmptyAction { autoLoading() }
-        stateLayout!!.showProgressView("数据加载中")
-        stateLayout!!.postDelayed({ loadData() }, 200)
+        stateLayout?.let {
+            it.setViewSwitchAnimProvider(FadeViewAnimProvider())
+            it.setErrorAndEmptyAction { autoLoading() }
+            it.showProgressView("数据加载中")
+            it.postDelayed({ loadData() }, 200)
+        }
     }
 
     protected fun autoLoading() {

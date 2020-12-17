@@ -1,23 +1,27 @@
 package com.example.mylibrary.mvp.uis.fragment
 
-import android.os.Bundle
 import me.jessyan.art.R
 import me.jessyan.art.mvp.IPresenter
 import me.jessyan.art.ui.view.StateLayout
 import me.jessyan.art.ui.view.emptyprovider.FadeViewAnimProvider
 
-abstract class BaseStateRefreshLoadingFragment<T,P: IPresenter> : BaseRefreshLoadingFragment<T,P>() {
+abstract class BaseStateRefreshLoadingFragment<T, P : IPresenter> :
+    BaseRefreshLoadingFragment<T, P>() {
     protected var stateLayout: StateLayout? = null
     override fun initData() {
         super.initData()
         stateLayout = getView<StateLayout>(R.id.stateLayout)
+        if (stateLayout == null)
+            throw NullPointerException("missing key views")
         initStateLayout()
     }
 
     protected fun initStateLayout() {
-        stateLayout!!.setViewSwitchAnimProvider(FadeViewAnimProvider())
-        stateLayout!!.setErrorAndEmptyAction { autoLoading() }
-        stateLayout!!.showProgressView(getString(R.string.loading))
+        stateLayout?.let {
+            it.setViewSwitchAnimProvider(FadeViewAnimProvider())
+            it.setErrorAndEmptyAction { autoLoading() }
+            it.showProgressView(getString(R.string.loading))
+        }
     }
 
     fun autoLoading() {

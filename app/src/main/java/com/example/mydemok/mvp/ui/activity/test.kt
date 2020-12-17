@@ -1,19 +1,35 @@
 package com.example.mydemok.mvp.ui.activity
 
-class test {
-    fun main(args: Array<String>) {
-        inlineFunction({ println("calling inline functions")
-            return // compile time error
-        },{ println("next parameter in inline functions")})
-    }//原文出自【易百教程】，商业转载请联系作者获得授权，非商业请保留原文链接：https://www.yiibai.com/kotlin/kotlin-inline-function.html#article-start
+import androidx.fragment.app.Fragment
+import com.example.mylibrary.listeners.ITabPager
+import com.example.mylibrary.mvp.uis.activities.BaseTabActivity
+import me.jessyan.art.mvp.IPresenter
+import me.jessyan.art.mvp.Message
 
+class test: BaseTabActivity<ITabPager, IPresenter>() {
 
+    override fun getData() {
+        TODO("Not yet implemented")
+    }
 
+    override fun getTitleText(): String? {
+        TODO("Not yet implemented")
+    }
 
-    inline fun inlineFunction(myFun: () -> Unit, nxtFun: () -> Unit) {
-        myFun()
-        nxtFun()
-        print("内联函数内的代码")
+    override fun getContentViewId(): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun obtainPresenter(): IPresenter? {
+        TODO("Not yet implemented")
+    }
+
+    override fun handleMessage(message: Message) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getContent(pos: Int): Fragment? {
+        TODO("Not yet implemented")
     }
 
 

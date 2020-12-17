@@ -37,16 +37,19 @@ abstract class BaseMagicTabFragment<T : ITabPager?, P : IPresenter> : BaseNewFra
         super.initData()
         magicIndicator = getView<MagicIndicator>(R.id.pre_tab_layout)
         mPager = getView<ViewPager>(R.id.pre_pager)
+        if (mPager == null || magicIndicator == null) {
+            throw NullPointerException("missing key views")
+        }
         getData()
     }
 
     protected fun initPager() {
-        if (mItems == null || mItems!!.size == 0) {
+        if (mItems == null || mItems?.size == 0) {
             return
         }
         mAdapter = pagerAdapter
-        mPager!!.adapter = mAdapter
-        mPager!!.currentItem = 0
+        mPager?.adapter = mAdapter
+        mPager?.currentItem = 0
         val commonNavigator = CommonNavigator(mContext)
         val navigatorAdapter: CommonNavigatorAdapter = object : CommonNavigatorAdapter() {
             override fun getCount(): Int {

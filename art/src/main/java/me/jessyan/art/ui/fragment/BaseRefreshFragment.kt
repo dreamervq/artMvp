@@ -8,17 +8,19 @@ import me.jessyan.art.mvp.IPresenter
 
 abstract class BaseRefreshFragment<P : IPresenter> : BaseNewFragment<P>(),
     OnRefreshListener {
-    protected lateinit var smartRefreshLayout: SmartRefreshLayout
+    protected var smartRefreshLayout: SmartRefreshLayout? = null
     override fun initData() {
         super.initData()
         smartRefreshLayout = getView(R.id.pre_refresh)
-        smartRefreshLayout.setOnRefreshListener(this)
-        smartRefreshLayout.setEnableLoadMore(false)
+        if (smartRefreshLayout == null)
+            throw NullPointerException("missing key views")
+        smartRefreshLayout?.setOnRefreshListener(this)
+        smartRefreshLayout?.setEnableLoadMore(false)
     }
 
     fun autoRefresh() {
-        smartRefreshLayout.postDelayed({
-            smartRefreshLayout.autoRefresh()
+        smartRefreshLayout?.postDelayed({
+            smartRefreshLayout?.autoRefresh()
             onRefresh()
         }, 100)
     }
@@ -29,6 +31,6 @@ abstract class BaseRefreshFragment<P : IPresenter> : BaseNewFragment<P>(),
 
     abstract fun onRefresh()
     protected fun refreshComplete() {
-        smartRefreshLayout.finishRefresh()
+        smartRefreshLayout?.finishRefresh()
     }
 }

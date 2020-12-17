@@ -11,7 +11,8 @@ import me.jessyan.art.ui.adapters.TabPagerAdapter
 import me.jessyan.art.ui.view.PagerSlidingTabStrip
 import java.util.*
 
-abstract class BaseTabFragment<T : ITabPager?, P : IPresenter> : BaseNewFragment<P>(),OnPageChangeListener,ITabContent {
+abstract class BaseTabFragment<T : ITabPager?, P : IPresenter> : BaseNewFragment<P>(),
+    OnPageChangeListener, ITabContent {
     protected var mTabLayout: PagerSlidingTabStrip? = null
     protected var mPager: ViewPager? = null
     protected var mItems: List<T>? = ArrayList()
@@ -21,6 +22,8 @@ abstract class BaseTabFragment<T : ITabPager?, P : IPresenter> : BaseNewFragment
         super.initData()
         mTabLayout = getView<PagerSlidingTabStrip>(R.id.pre_tab_layout)
         mPager = getView<ViewPager>(R.id.pre_pager)
+        if (mPager == null || mTabLayout == null)
+            throw NullPointerException("missing key views")
         initTabView()
         data
     }
